@@ -1,0 +1,115 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
+p{
+    font-size: 3rem;
+    padding-left: 15px;
+}
+.hidden{
+    display: none!important;
+}
+.lv0, .lv1, .lv2, .lv3, .lv4, .lv5, .lv6{
+    font-size: 3rem;
+    margin-top: 1rem;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid black;
+}
+#AbilityItem{
+    padding-left: 15px;
+    border-top: 1px solid black;
+}
+#AbilityItem:nth-child(2n){
+    background-color: lightskyblue;
+}
+#AbilityItem.active{
+    background-color: yellow;
+}
+
+#Banner{
+    position: fixed;
+    min-height: 5%;
+    max-height: 5%;
+    width: 100%;
+}
+#BigScreen, #AbilitySelect, #Equip{
+    margin-top: 9%;
+    min-height: 95%;
+    max-height: 95%;
+    width: 100%;
+    font-size: 2rem;
+    overflow: scroll;
+}
+li{
+    width: 50%;
+    list-style-type: none;
+    font-size: 2rem;
+    display: inline;
+    text-align: center;
+    padding: 1rem;
+}
+table{
+    min-width: 100%;
+    font-size: 3rem;
+}
+
+object{
+    min-width: 100%;
+    max-width: 100%;
+    margin-top: 1rem;
+}
+.Selector{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    height: 30%;
+}
+#More, #Less, #Cancel, #Ok, #Amount{
+    min-width: 25%;
+    height: 20%;
+    color: white;
+    font-weight: bold;
+    font-size: 4rem;
+    position: absolute;
+    border: 1px solid black;
+}
+#SpellList{
+    width: 80%; 
+    height: 80%; 
+    margin: 10%; 
+    position: fixed; 
+    background-color: white;
+    border: solid black 2px;
+}
+#Amount{
+    min-width: 50%;
+    position: absolute;
+    left: 25%;
+    color: black;
+    text-align: center;
+}
+#More, #Ok{
+    background-color: green;
+    right: 0;
+}
+#Less, #Cancel{
+    background-color: red;
+    left: 0;
+}
+#Cancel, #Ok{
+    bottom: 0;
+    min-width: 50%;
+}
+#More, #Less, #Amount{
+    top: 0;
+}
+.Selector > table{
+    position: absolute;
+    top: 20%;
+    width: 100%;
+    height: 60%;
+    font-size: 4rem;
+    border: solid grey 1px;
+    text-align: center;
+}

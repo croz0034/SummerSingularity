@@ -1,0 +1,73 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2753.53 2634.38">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #000;
+        stroke-miterlimit: 10;
+        stroke-width: 2px;
+      }
+
+      .cls-2 {
+        font-size: 72px;
+        font-family: MyriadPro-Regular, Myriad Pro;
+      }
+
+      .cls-3 {
+        letter-spacing: 0em;
+      }
+
+      .cls-4 {
+        letter-spacing: 0em;
+      }
+
+      .cls-5 {
+        letter-spacing: 0.01em;
+      }
+
+      .cls-6 {
+        letter-spacing: 0em;
+      }
+
+      .cls-7 {
+        letter-spacing: 0.01em;
+      }
+
+      .cls-8 {
+        letter-spacing: -0.03em;
+      }
+
+      .cls-9 {
+        letter-spacing: 0em;
+      }
+    </style>
+  </defs>
+  <title>AwardRadio</title>
+  <polygon class="cls-1" points="1399.26 347 617.43 723.51 424.33 1569.52 965.38 2247.97 1833.14 2247.97 2374.19 1569.52 2181.09 723.51 1399.26 347"/>
+  <polygon class="cls-1" points="1402.76 442.5 699.11 781.36 525.33 1542.77 1012.27 2153.38 1793.26 2153.38 2280.2 1542.77 2106.41 781.36 1402.76 442.5"/>
+  <polygon class="cls-1" points="1404.76 537.5 779.3 838.71 624.82 1515.52 1057.65 2058.28 1751.87 2058.28 2184.7 1515.52 2030.23 838.71 1404.76 537.5"/>
+  <polygon class="cls-1" points="1402.76 632.5 855.48 896.06 720.31 1488.27 1099.04 1963.18 1706.48 1963.18 2085.21 1488.27 1950.04 896.06 1402.76 632.5"/>
+  <polygon class="cls-1" points="1405.76 727.5 936.66 953.41 820.8 1461.02 1145.43 1868.08 1666.09 1868.08 1990.72 1461.02 1874.86 953.41 1405.76 727.5"/>
+  <polygon class="cls-1" points="1406.26 823 1015.35 1011.26 918.8 1434.26 1189.32 1773.49 1623.2 1773.49 1893.73 1434.26 1797.18 1011.26 1406.26 823"/>
+  <polygon class="cls-1" points="1402.76 917.5 1090.03 1068.11 1012.79 1406.51 1229.21 1677.89 1576.32 1677.89 1792.73 1406.51 1715.49 1068.11 1402.76 917.5"/>
+  <polygon class="cls-1" points="1402.26 1012 1167.71 1124.96 1109.78 1378.76 1272.1 1582.29 1532.43 1582.29 1694.74 1378.76 1636.81 1124.96 1402.26 1012"/>
+  <polygon class="cls-1" points="1402.26 1107 1245.89 1182.31 1207.28 1351.51 1315.48 1487.2 1489.04 1487.2 1597.25 1351.51 1558.63 1182.31 1402.26 1107"/>
+  <polygon class="cls-1" points="1402.26 1198 1324.08 1235.65 1304.77 1320.26 1358.87 1388.1 1445.65 1388.1 1499.75 1320.26 1480.44 1235.65 1402.26 1198"/>
+  <polygon class="cls-1" points="1406.26 254 546.25 668.16 333.84 1598.78 928.99 2345.07 1883.53 2345.07 2478.68 1598.78 2266.28 668.16 1406.26 254"/>
+  <polygon class="cls-1" points="1406.26 157 468.06 608.82 236.35 1624.03 885.6 2438.17 1926.92 2438.17 2576.18 1624.03 2344.46 608.82 1406.26 157"/>
+  <circle class="cls-1" cx="1406.26" cy="1353" r="1200"/>
+  <line class="cls-1" x1="1406.26" x2="1402.26" y2="1298"/>
+  <line class="cls-1" x1="2597.26" y1="418" x2="1402.26" y2="1298"/>
+  <line class="cls-1" x1="2753.26" y1="1681.01" x2="1402.26" y2="1298"/>
+  <line class="cls-1" x1="2000.26" y1="2596" x2="1402.26" y2="1298"/>
+  <line class="cls-1" x1="821.26" y1="2616" x2="1402.26" y2="1298"/>
+  <line class="cls-1" x1="0.26" y1="1678" x2="1402.26" y2="1298"/>
+  <line class="cls-1" x1="278.26" y1="473" x2="1402.26" y2="1298"/>
+  <text class="cls-2" transform="matrix(1, 0.01, -0.01, 1, 1459.13, 96.05)">D<tspan class="cls-3" x="47.95" y="0">r</tspan><tspan class="cls-4" x="71.14" y="0">agon</tspan></text>
+  <text class="cls-2" transform="translate(2440.64 632.38)"><tspan class="cls-5">G</tspan><tspan x="47.09" y="0">a</tspan><tspan class="cls-6" x="81.79" y="0">r</tspan><tspan x="105.62" y="0">ber</tspan></text>
+  <text class="cls-2" transform="translate(2596.89 1785.13)">Lion</text>
+  <text class="cls-2" transform="translate(394.26 472.5)"><tspan class="cls-7">O</tspan><tspan x="50.62" y="0">wl</tspan></text>
+  <text class="cls-2" transform="translate(2018.51 2528.63)"><tspan class="cls-6">R</tspan><tspan x="39.02" y="0">ose</tspan></text>
+  <text class="cls-2" transform="translate(859.39 2616.38)">Smith</text>
+  <text class="cls-2" transform="translate(18.76 1753.88)"><tspan class="cls-8">W</tspan><tspan x="58.54" y="0">a</tspan><tspan class="cls-9" x="93.24" y="0">rr</tspan><tspan x="140.9" y="0">ior</tspan></text>
+</svg>

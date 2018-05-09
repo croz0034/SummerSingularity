@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+</head>
+
+<body>
+
+    <nav id="Banner">
+        <select name="Classes" id="Classes" style="position: fixed; top: 0; left: 25%; z-index: 9001; min-height: 5rem; max-height: 5rem; font-size: 4rem; width: 50%; border: 1px solid grey; text-align: center;">
+        <option > Pick a Class </option>
+       <optgroup label="Melee">  </optgroup>
+        <option value="0"> Archer </option>
+        <option value="1"> Assassin </option>
+        <option value="2"> Barbarian</option>
+        <option value="3"> Monk</option>
+        <option value="4"> Scout</option>
+        <option value="5"> Warrior</option>
+       <optgroup label="Magic"> </optgroup>
+        <option value="6"> Bard </option>
+        <option value="7"> Druid </option>
+        <option value="8"> Healer </option>
+        <option value="9"> Wizard </option>
+       <optgroup label="Restricted">  </optgroup>
+        <option value="10"> AntiPaladin </option>
+        <option value="11"> Paladin </option>
+    </select>
+
+        <button name="Classes" id="Back" style="position: fixed; top: 0; left: 0; z-index: 9001; min-height: 5rem; max-height: 5rem; font-size: 4rem; width: 25%; border: 1px solid grey; float: left">Back</button>
+
+        <button name="Classes" id="Forward" style="position: fixed; top: 0; right: 0;  z-index: 9001; min-height: 5rem; max-height: 5rem; font-size: 4rem; width: 25%; border: 1px solid grey; float: right">Lists</button>
+
+
+    </nav>
+    
+    <div id="SpellList" class="hidden">
+        <p style="text-align: center;" id="TestingBed"><strong>Spells Chosen:</strong></p>
+        
+        <div class="Selector">
+ 
+            
+   <table > 
+          <tr> 
+          <th> Spell </th><th>cost</th><th>max</th><th>uses</th></tr>
+          <tr>
+              <td id="selectedSpellName">lycanthropy</td> <td id="selectedSpellCost">1</td> <td id="selectedSpellMax">2</td> <td id="selectedSpellUses">1/r</td>
+          </tr>
+               </table>
+           
+            <button id="More" class="1"> + </button>
+            <button id="Less" class='0'> - </button>
+            <h4 id="Amount" > 0 / 2 </h4>
+            <button id="Cancel" > Cancel </button>
+            <button id="Ok" > Continue </button>
+        </div>
+    </div>
+    
+    
+    
+   <div class="Page0">
+<div id="Equip"></div>
+</div>
+
+   <div class="Page1 hidden">
+    <div id="AbilitySelect">
+
+
+    </div>
+   </div>
+   <div class="Page2 hidden">
+<div id="BigScreen">
+    
+    
+</div>
+   </div>
+   
+   
+    <script src="JS/index.js"></script>
+    <script src="JS/PseudoJSON/Abilities.js"></script>
+    <script src="JS/PseudoJSON/ClassAbilityKeys.js"></script>
+    <script src="JS/PseudoJSON/ClassGear.js"></script>
+</body>
+</html>

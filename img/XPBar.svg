@@ -1,0 +1,54 @@
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 50">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #2ab34b;
+      }
+        .Maxed {
+        fill: blue;
+        }
+
+      .cls-2 {
+        fill: none;
+        stroke: #000001;
+        stroke-miterlimit: 10;
+        stroke-width: 5px;
+      }
+    </style>
+  </defs>
+  <title>Untitled-1</title>
+  <rect class="cls-1" width="1000" height="50"/>
+    
+  <rect class="cls-2" width="1000" height="50"/>
+    
+    <script>
+//<![CDATA[    
+    let levels = [[0, 0],[0, 5],[5,12],[12,21],[21,34],[34,53],[53, 999]];
+let credits = 0;
+        
+    let run = function(){
+console.log('running');
+let credits = localStorage.getItem("credits");
+console.log(credits);
+if(document.querySelector(".Maxed")){
+document.querySelector(".Maxed").classList.remove("Maxed");}
+levels.forEach((level)=>{
+        if(credits > level[0] && credits <= level[1]){
+document.querySelector('.cls-1').setAttribute("width", (1000 * ((credits - level[0])/(level[1] - level[0]))));
+}
+} )
+if(credits > 53){
+document.querySelector('.cls-1').setAttribute("width", 1000);
+document.querySelector('.cls-1').classList.add("Maxed");
+}
+}                                                
+    
+        document.addEventListener("DOMContentLoaded", run);
+        window.addEventListener('storage', run);
+ //]]>   
+    </script>
+</svg>
+
+<!--    let credits = localstorage.getItem("credits");-->
+
+<!--= ;-->
