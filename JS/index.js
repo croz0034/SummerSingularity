@@ -1,6 +1,7 @@
 let Tryeltech = {
     PageNumber: 0,
     Pages: [['.Page0', "", "abilities"], ['.Page1', "equip", "Spell"], ['.Page2', "abilities", ""]],
+    SpellPoints: [5,5,5,5,5,6],
     
     SpellLists: [],
 
@@ -146,18 +147,28 @@ ${Tryeltech.magicClasses(TargetAbilities.LV6, 6)}</p>`;
      document.getElementById("Cancel").removeEventListener('click', clearout);
     };
         let clearout2 = function(){
-            
+            let price = cost*total
+                Tryeltech.SpellPoints[level-1] -= cost*total;
+            for(i=0; i<7; i++){
+                if(Math.sign(Tryeltech.SpellPoints[i]) == "-1"){ 
+                    Tryeltech.SpellPoints[(i+1)] += Tryeltech.SpellPoints[i];
+                    Tryeltech.SpellPoints[i] = 0;
+            console.log('Running!');
+                }
+            }
+            console.log(Tryeltech.SpellPoints);
         Tryeltech.SpellLists.push({"Spell": info, "Purchased": total, "cost": (total*cost)});
-        console.log(Tryeltech.SpellLists);
                             
             clearout(ev);
         };
         document.getElementById("SpellList").classList.remove("hidden");
         let info = ev.target.parentElement.getAttribute('info').split([","]);
+        let level = ev.target.parentElement.getAttribute('level');
         let name = abilities[info[0]].name;
         let cost = info[4];
         let max = info[3];
-
+        let availablePoints = 0;
+        for(i = level; i < 7; i++){ availablePoints += Tryeltech.SpellPoints[(i-1)];};
         let total = 0;
         document.getElementById('selectedSpellCost').textContent = cost;
         document.getElementById('selectedSpellName').textContent = name;
@@ -165,21 +176,20 @@ ${Tryeltech.magicClasses(TargetAbilities.LV6, 6)}</p>`;
         document.getElementById('selectedSpellUses').textContent = info[1] + "/" + info[2][1];
 
         if( isNaN(max)){
-            max = 31;
+            max = availablePoints;
         }
 
         document.getElementById("Amount").textContent = `${total/cost}/${max}`;
 
         let price = function (ev) {
             let plusorminus = ev.target.id;
-            if (plusorminus == 'Less' && total != 0) {
+            if (plusorminus == 'Less' && total != 0 ) {
                 total --;
             }
-            if (plusorminus == 'More' && total <  max) {
+            if (plusorminus == 'More' && total <  max && availablePoints >= (cost*(total+1))) {
                 total ++;
             }
             document.getElementById("Amount").textContent = `${total}/${max}`;
-            console.log(total * cost);
 
         };
      document.getElementById("More").addEventListener('click', price);
@@ -202,8 +212,6 @@ ${Tryeltech.magicClasses(TargetAbilities.LV6, 6)}</p>`;
         } catch (err) {};
         let Element = ev.target.parentElement.getAttribute('info').split([","])[0];
         ev.target.parentElement.classList.add('active');
-        console.log(Element);
-        console.log(ev.target.parentElement.getAttribute('level'));
         let screen = document.getElementById('BigScreen');
         screen.innerHTML = ``;
         if (spellType[abilities[Element].type]) {
