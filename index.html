@@ -37,7 +37,7 @@
     </nav>
     
     <div id="SpellList" class="hidden">
-        <p style="text-align: center;" id="TestingBed"><strong>Spells Chosen:</strong></p>
+        <table id="TestingBed"></table>
         
         <div class="Selector">
  
@@ -58,9 +58,25 @@
         </div>
     </div>
     
+    <div class="Login">
+    <form style="font-size: 4rem; border: 1px solid black; position: absolute; top: 20%; left: 10%; width: 80%; height: 50%">
+    <br>
+    <h3 style="text-align: center">Log In</h3>
+       <br>
+        Park:
+        <select name="Park" id="Parks" style="font-size: 4rem; border: 1px solid black; width: 80%; margin-left: 10%">
+            <option value="" ></option>
+        </select>
+        <br><br>
+        Name:
+        <input type="text" id="CharName" style="font-size: 4rem; border: 1px solid black; width: 80%; margin-left: 10%; background-color: lightgrey" readonly value="    Select a Park First">
+        <br><br>
+        <button id="LoginGo" style="font-size: 4rem; border: 1px solid black; width: 60%; margin-left: 20%">Sign in </button>
+      
+    </form>
+    </div>
     
-    
-   <div class="Page0">
+   <div class="Page0 hidden">
 <div id="Equip"></div>
 </div>
 
@@ -79,8 +95,12 @@
    
    
     <script src="JS/index.js"></script>
+    <script src="JS/LevelRig.js"></script>
     <script src="JS/PseudoJSON/Abilities.js"></script>
     <script src="JS/PseudoJSON/ClassAbilityKeys.js"></script>
-    <script src="JS/PseudoJSON/ClassGear.js"></script>
+    <script src="JS/PseudoJSON/ClassGear.js"></script> 
+    <script src="KensCode/lib/jquery.min.js"></script>
+    <script src="KensCode/jsork-min.js"></script>
+    <script src="KensCode/lib/moment.js"></script>
 </body>
 </html>

@@ -24,11 +24,10 @@
     <script>
 //<![CDATA[    
     let levels = [[0, 0],[0, 5],[5,12],[12,21],[21,34],[34,53],[53, 999]];
-let credits = 0;
         
     let run = function(){
 console.log('running');
-let credits = localStorage.getItem("credits");
+let credits = sessionStorage.getItem("Experience");
 console.log(credits);
 if(document.querySelector(".Maxed")){
 document.querySelector(".Maxed").classList.remove("Maxed");}
@@ -43,7 +42,6 @@ document.querySelector('.cls-1').classList.add("Maxed");
 }
 }                                                
     
-        document.addEventListener("DOMContentLoaded", run);
         window.addEventListener('storage', run);
  //]]>   
     </script>
