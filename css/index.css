@@ -117,3 +117,11 @@ object{
 #TestingBed{
     text-align: center;
 }
+
+#Classes{
+    border: 1px solid grey;
+    min-width: 110%;
+    margin-left: -3rem;
+    display: block;
+    font-size: 4rem
+}

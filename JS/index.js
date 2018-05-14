@@ -1,7 +1,8 @@
 let Tryeltech = {
+    ChosenClass: 'd',
     PageNumber: 0,
     Experience: [],
-    Pages: [['.Login', "", "Equipment" ],['.Page0', "SignIn", "abilities"], ['.Page1', "equip", "Spell"], ['.Page2', "abilities", ""]],
+    Pages: [['.Login', "", "Classes" ],['.ClassSelect', 'Log in', 'Equip'],['.Page0', "Classes", "abilities"], ['.Page1', "equip", "Spell"], ['.Page2', "abilities", ""]],
     SpellPoints: [5,5,5,5,5,6],
     
     SpellLists: [],
@@ -15,6 +16,9 @@ let Tryeltech = {
             document.querySelector(Tryeltech.Pages[Tryeltech.PageNumber][0]).classList.remove('hidden');
             document.getElementById("Back").textContent = Tryeltech.Pages[Tryeltech.PageNumber][1];
             document.getElementById("Forward").textContent = Tryeltech.Pages[Tryeltech.PageNumber][2];
+            if(Tryeltech.PageNumber == 2){
+                LevelRig.XPActivate();
+            }
         }
     },
 
@@ -32,7 +36,8 @@ let Tryeltech = {
 
     init: function () {
         LevelRig.init();
-        document.getElementById("Classes").addEventListener('change', Tryeltech.ClassVomit);
+        let meowmix = document.querySelectorAll("#Classes");
+        meowmix.forEach((li)=>{li.addEventListener('click', Tryeltech.ClassVomit)});
         document.getElementById("Back").addEventListener('click', Tryeltech.Prev);
         document.getElementById("Forward").addEventListener('click', Tryeltech.Next);
       
@@ -41,17 +46,17 @@ let Tryeltech = {
     ClassVomit: function (ev) {
         let page1 = document.getElementById("Equip");
         let stage = document.getElementById("AbilitySelect");
-        let ClassVal = document.getElementById("Classes").value;
-        let TargetClass = Classes[ClassVal];
+        let ClassVal = ev.target.value;
+        Tryeltech.ChosenClass = Classes[ClassVal];
         let TargetAbilities = ClassAbilities[ClassVal];
         if (ClassVal < 6 || ClassVal > 9) {
             page1.innerHTML =
-                `<p> <strong> Class: </strong> ${TargetClass.Name} </p>
-<p> <strong> Sash Colour: </strong> ${TargetClass.Sash} </p>
-<p> <strong> Armour: </strong> ${TargetClass.Armour}</p>
-<p> <strong> Shield: </strong> ${Shields[TargetClass.Shield]}</p>
-<p> <strong> Weapons: </strong> ${TargetClass.Weapons}</p>
-<object data="img/XPBar.svg" type="image/svg+xml"></object>`;
+                `<p> <strong> Class: </strong> ${Tryeltech.ChosenClass.Name} </p>
+<p> <strong> Sash Colour: </strong> ${Tryeltech.ChosenClass.Sash} </p>
+<p> <strong> Armour: </strong> ${Tryeltech.ChosenClass.Armour}</p>
+<p> <strong> Shield: </strong> ${Shields[Tryeltech.ChosenClass.Shield]}</p>
+<p> <strong> Weapons: </strong> ${Tryeltech.ChosenClass.Weapons}</p>
+<object data="img/XPBar.svg" type="image/svg+xml" id="XP"></object>`;
             stage.innerHTML = `<p class="lv0"> Look The Part: 
 ${Tryeltech.meleeClasses(TargetAbilities.LTP)}</p>
 <p class="lv1">Level 1
@@ -72,14 +77,14 @@ ${Tryeltech.magicClasses(TargetAbilities.LV6)}</p>`;
             });
         } else {
             page1.innerHTML =
-                `<p> <strong> Class: </strong> ${TargetClass.Name} </p>
-<p> <strong> Sash Colour: </strong> ${TargetClass.Sash} </p>
-<p> <strong> Armour: </strong> ${TargetClass.Armour}</p>
-<p> <strong> Shield: </strong> ${Shields[TargetClass.Shield]}</p>
-<p> <strong> Weapons: </strong> ${TargetClass.Weapons}</p>
+                `<p> <strong> Class: </strong> ${Tryeltech.ChosenClass.Name} </p>
+<p> <strong> Sash Colour: </strong> ${Tryeltech.ChosenClass.Sash} </p>
+<p> <strong> Armour: </strong> ${Tryeltech.ChosenClass.Armour}</p>
+<p> <strong> Shield: </strong> ${Shields[Tryeltech.ChosenClass.Shield]}</p>
+<p> <strong> Weapons: </strong> ${Tryeltech.ChosenClass.Weapons}</p>
 <p> <strong> Note: </strong> </p>
 <p> Casters DO NOT start with armour, or shield profficiencies, and may only use daggers. Additional equipment may be purchased with spell points. </p>
-<object data="img/XPBar.svg" type="image/svg+xml"></object>`;
+<object data="img/XPBar.svg" type="image/svg+xml" id="XP"></object>`;
             stage.innerHTML = `<p class="lv0"> Look The Part: 
 ${Tryeltech.magicClasses(TargetAbilities.LTP, 0)}</p>
 <p class="lv1">Level 1
@@ -102,9 +107,9 @@ ${Tryeltech.magicClasses(TargetAbilities.LV6, 6)}</p>`;
 
             })
 
-        }
-        setTimeout(()=>{
-        LevelRig.XPActivate();}, 50);
+        };
+        Tryeltech.Next(); 
+        XPBarCode.update();
     },
 
     meleeClasses: function (Abilitylistings) {
