@@ -17,34 +17,10 @@
     </style>
   </defs>
   <title>Untitled-1</title>
-  <rect class="cls-1" width="1000" height="50"/>
+  <rect class="cls-1" id="Progress" width="1000" height="50"/>
     
   <rect class="cls-2" width="1000" height="50"/>
     
-    <script>
-//<![CDATA[    
-    let levels = [[0, 0],[0, 5],[5,12],[12,21],[21,34],[34,53],[53, 999]];
-        
-    let run = function(){
-console.log('running');
-let credits = sessionStorage.getItem("Experience");
-console.log(credits);
-if(document.querySelector(".Maxed")){
-document.querySelector(".Maxed").classList.remove("Maxed");}
-levels.forEach((level)=>{
-        if(credits > level[0] && credits <= level[1]){
-document.querySelector('.cls-1').setAttribute("width", (1000 * ((credits - level[0])/(level[1] - level[0]))));
-}
-} )
-if(credits > 53){
-document.querySelector('.cls-1').setAttribute("width", 1000);
-document.querySelector('.cls-1').classList.add("Maxed");
-}
-}                                                
-    
-        window.addEventListener('storage', run);
- //]]>   
-    </script>
 </svg>
 
 <!--    let credits = localstorage.getItem("credits");-->

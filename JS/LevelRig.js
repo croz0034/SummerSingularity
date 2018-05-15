@@ -53,14 +53,13 @@ let LevelRig ={
             })
             let playerData = JSON.stringify({"PlayerName": Yolo, "Park": LevelRig.Park, "ClassCredits": LevelRig.XP});
         localStorage.setItem("Player", playerData);
-        })
+        });
+        Tryeltech.Next();
     },
      XPActivate: function(){
-         let job = document.getElementById("Classes").value;
-         let classTranslate = ["Archer", "Assassin", "Barbarian", 'Monk', 'Scout', 'Warrior', 'Bard', 'Druid', 'Healer', 'Wizard', 'AntiPaladin', 'Paladin'];
         LevelRig.XP.forEach((clas)=>{
-            if(clas.class == classTranslate[job]){
-                sessionStorage.setItem('Experience', clas.credits);
+            if(clas.class == Tryeltech.ChosenClass.Name){
+                XPBarCode.update(clas.credits);
             }
         })
          
