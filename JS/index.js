@@ -40,6 +40,8 @@ let Tryeltech = {
         meowmix.forEach((li)=>{li.addEventListener('click', Tryeltech.ClassVomit)});
         document.getElementById("Back").addEventListener('click', Tryeltech.Prev);
         document.getElementById("Forward").addEventListener('click', Tryeltech.Next);
+        
+        SpellBook.init()
       
     },
 
@@ -76,6 +78,7 @@ ${Tryeltech.magicClasses(TargetAbilities.LV6)}</p>`;
                 Element.addEventListener('click', Tryeltech.onscreen);
             });
         } else {
+            SpellBook.CurrentClass = Tryeltech.ChosenClass.Name;
             page1.innerHTML =
                 `<p> <strong> Class: </strong> ${Tryeltech.ChosenClass.Name} </p>
 <p> <strong> Sash Colour: </strong> ${Tryeltech.ChosenClass.Sash} </p>
@@ -84,7 +87,7 @@ ${Tryeltech.magicClasses(TargetAbilities.LV6)}</p>`;
 <p> <strong> Weapons: </strong> ${Tryeltech.ChosenClass.Weapons}</p>
 <p> <strong> Note: </strong> </p>
 <p> Casters DO NOT start with armour, or shield profficiencies, and may only use daggers. Additional equipment may be purchased with spell points. </p>
-<object data="img/XPBar.svg" type="image/svg+xml" id="XP"></object>`;
+<object data="img/XPBar.svg" type="image/svg+xml" id="XP"></object><ul>`;
             stage.innerHTML = `<p class="lv0"> Look The Part: 
 ${Tryeltech.magicClasses(TargetAbilities.LTP, 0)}</p>
 <p class="lv1">Level 1
@@ -101,11 +104,31 @@ ${Tryeltech.magicClasses(TargetAbilities.LV5, 5)}</p>
 ${Tryeltech.magicClasses(TargetAbilities.LV6, 6)}</p>`;
             document.querySelectorAll("#AbilityItem").forEach((Element) => {
                 Element.addEventListener('click', Tryeltech.onscreen);
-                Element.addEventListener('click', Tryeltech.Choose);
+                Element.addEventListener('click', SpellBook.Activate);
 
 
 
             })
+            
+SpellBook.SpellLists = localStorage.getItem(Tryeltech.ChosenClass.Name);
+let listkeys = localStorage.getItem(Tryeltech.ChosenClass.Name+"Key");
+            SpellBook.SpellLists = JSON.parse(SpellBook.SpellLists);
+            listkeys = JSON.parse(listkeys);
+            
+            if(listkeys){
+                console.log(listkeys);
+                try{
+                listkeys.forEach((lists)=>{ 
+                    page1.innerHTML += `<li id="${lists}" class="ListType"> ${lists}</li>`;
+                })}
+                catch(err){
+                    page1.innerHTML += `<li id="${listkeys}" class="ListType"> ${listkeys}</li>`;
+                }
+                
+                document.querySelectorAll('.ListType').forEach((listButton)=>{
+                    listButton.addEventListener('click', SpellBook.Load);
+                })
+            }
 
         };
         Tryeltech.Next(); 
@@ -129,124 +152,7 @@ ${Tryeltech.magicClasses(TargetAbilities.LV6, 6)}</p>`;
         })
         EndResults += `</table>`;
         return EndResults;
-    },
-    Choose: function (ev) {
-        let clearout = function(){ document.getElementById('SpellList').classList.add('hidden');
-        document.getElementById("More").removeEventListener('click', price); document.getElementById("Less").removeEventListener('click', price);
-     document.getElementById("Ok").removeEventListener('click', clearout2);
-     document.getElementById("Cancel").removeEventListener('click', clearout);
-    };
-        
-        document.getElementById("SpellList").classList.remove("hidden");
-        let info = ev.target.parentElement.getAttribute('info').split([","]);
-        let level = ev.target.parentElement.getAttribute('level');
-        let name = abilities[info[0]].name;
-        let cost = info[4];
-        let max = info[3];
-        let availablePoints = 0;
-        let total = 0;
-        
-                if (Tryeltech.SpellLists.length > 0){
-            let additions = document.getElementById('TestingBed');
-            additions.innerHTML = `<tr> <th> Purchased </th><th> Name </th><th>cost</th></tr>`;
-                    
-            Tryeltech.SpellLists.forEach(function(spell){
-        additions.innerHTML += `<tr id="Purchased" info="${spell.Spell}"><td>${spell.Purchased}</td><td>${abilities[spell.Spell[0]].name}</td><td>${spell.cost}</td></tr>`
-//            
-                console.log(spell);
-            })
-            
-        document.querySelectorAll("#Purchased").forEach((Element) => {
-            Element.addEventListener('click', clearout);
-            Element.addEventListener('click', Tryeltech.Choose);
-            Element.addEventListener('click', ()=>{ 
-                try {
-            let removal = document.querySelector('.active');
-            removal.classList.remove('active');
-        } catch (err) {};
-                ev.target.parentElement.classList.add('active');
-                
-            })
-            
-        })
-                    
-                    
-        for(i = 0; i < Tryeltech.SpellLists.length; i++){
-            if(Tryeltech.SpellLists[i].Spell[0] == info[0]){
-                total = Tryeltech.SpellLists[i].Purchased * cost;
-            }
-            
-        }
-                }
-        
-
-        let clearout2 = function(){
-            let price = cost*total
-                Tryeltech.SpellPoints[level-1] -= cost*total;
-            console.log(Tryeltech.SpellPoints);
-            
-            let exists = 'no';
-                    for(i = 0; i < Tryeltech.SpellLists.length; i++){
-            if(Tryeltech.SpellLists[i].Spell[0] == info[0]){
-                Tryeltech.SpellLists[i] = {"Spell": info, "Purchased": total, "cost": (total*cost), "level": level};
-                exists = 'yes';
-            }
-            
-        }
-            if(exists == 'no') {               
-        Tryeltech.SpellLists.push({"Spell": info, "Purchased": total, "cost": (total*cost), "level": level});  }
-            
-
-        Tryeltech.SpellLists.sort(function compare(a,b) {
-  if (a.level < b.level)
-    return -1;
-  if (a.level > b.level)
-    return 1;
-});
-            console.log(Tryeltech.SpellLists);
-            clearout(ev);
-        };
-        
-        
-        for(i = 0; i < 6; i++){
-            if(Math.sign(Tryeltech.SpellPoints[i]) == "-1"){availablePoints += Tryeltech.SpellPoints[i];}
-            else if(i >= (level-1)){availablePoints += Tryeltech.SpellPoints[i];}}
-        document.getElementById('selectedSpellCost').textContent = cost;
-        document.getElementById('selectedSpellName').textContent = name;
-        document.getElementById('selectedSpellMax').textContent = max;
-        document.getElementById('selectedSpellUses').textContent = info[1] + "/" + info[2][1];
-
-        if( isNaN(max)){
-            max = availablePoints;
-        }
-
-        document.getElementById("Amount").textContent = `${total/cost}/${max}`;
-
-        let price = function (ev) {
-            let plusorminus = ev.target.id;
-            if (plusorminus == 'Less' && total != 0 ) {
-                total --;
-            }
-            if (plusorminus == 'More' && total <  max && availablePoints >= (cost*(total+1))) {
-                total ++;
-            }
-            document.getElementById("Amount").textContent = `${total}/${max}`;
-
-        };
-     document.getElementById("More").addEventListener('click', price);
-    document.getElementById("Less").addEventListener('click', price);
-       document.getElementById("Ok").addEventListener('click', clearout2); document.getElementById('Cancel').addEventListener('click', clearout);
-        
-      },
-
-
-
-
-
-
-
-
-    onscreen: function (ev) {
+    },  onscreen: function (ev) {
         try {
             let removal = document.querySelector('.active');
             removal.classList.remove('active');

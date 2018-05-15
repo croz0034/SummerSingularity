@@ -26,6 +26,9 @@ p{
 #AbilityItem.active{
     background-color: yellow;
 }
+.active{
+    background-color: yellow;
+}
 
 #Banner{
     position: fixed;
