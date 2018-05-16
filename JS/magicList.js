@@ -1,14 +1,16 @@
 let SpellBook = {
-        SpellLists: {},
-        ListKey: [],
-        CurrentList: [],
-        CurrentSpell: {},
+        SpellLists: [],
+        ListKey: ['end'],
+        CurrentList: ['Spellpoints'],
+        CurrentSpell: [''],
         CurrentTotal: 0,
         CurrentLevel: 0,
         CurrentClass: "",
+    TargetList: '',
         SpellPoints: [5, 5, 5, 5, 5, 6],
 
         init: function () {
+            
             document.getElementById("More").addEventListener('click', SpellBook.Price);
             document.getElementById("Less").addEventListener('click', SpellBook.Price);
             document.getElementById("Ok").addEventListener('click', SpellBook.Confirm);
@@ -18,22 +20,16 @@ let SpellBook = {
         },
     
         Save: function(){
-            let ListName = SpellBook.CurrentList[0];
-            let SaveState = JSON.stringify(SpellBook.CurrentList);
-            if(!ListName.isString){
-               ListName = prompt('Name your spell list');
-            };
+            let listname = prompt('list name:');
+            SpellBook.ListKey += "," +listname;
+            
             SpellBook.CurrentList[0] = SpellBook.SpellPoints;
-            SpellBook.ListKey.push(ListName);
             
-            console.log(SaveState);
-            console.log(SpellBook.CurrentList);
-            SpellBook.SpellLists.set
-            localStorage.setItem(SpellBook.CurrentClass, JSON.stringify(SpellBook.SpellLists));
+            localStorage.setItem(SpellBook.CurrentClass+"Key", SpellBook.ListKey);
+            
+            localStorage.setItem(listname, JSON.stringify(SpellBook.CurrentList));
             
             
-            
-            localStorage.setItem(SpellBook.CurrentClass+"Key", JSON.stringify(SpellBook.ListKey));
             
         },
     /////////////////////////// List Populate
@@ -49,7 +45,7 @@ let SpellBook = {
             
             
         let exists = 'no';
-        for(i = 0; i < SpellBook.CurrentList.length; i++){
+        for(i = 1; i < SpellBook.CurrentList.length; i++){
             if(SpellBook.CurrentList[i].Spell[0] == SpellBook.CurrentSpell[0]){ exists = i; }}
         
         if(exists != 'no'){
@@ -61,9 +57,9 @@ let SpellBook = {
             
         
         additions.innerHTML = `<tr><th>Purchased</th><th>Name</th><th>Cost</th></tr>`;
-    SpellBook.CurrentList.forEach((item)=>{
-        additions.innerHTML += `<tr info="${item.Spell}" id="SelectedSpells"><td>${item.Purchased}</td><td>${abilities[item.Spell[0]].name}</td><td>${item.cost}</td></tr>` ;
-    })
+            for (i=1; i< SpellBook.CurrentList.length; i++){
+        additions.innerHTML += `<tr info="${SpellBook.CurrentList[i].Spell}" id="SelectedSpells"><td>${SpellBook.CurrentList[i].Purchased}</td><td>${abilities[SpellBook.CurrentList[i].Spell[0]].name}</td><td>${SpellBook.CurrentList[i].cost}</td></tr>` ;
+    }
             
             
     let ButtonAdd = document.querySelectorAll('#SelectedSpells');
@@ -83,13 +79,16 @@ let SpellBook = {
             
 },
     Load: function(ev){
+        
         let loadTarget = ev.target.id;
         console.log(loadTarget);
-        console.log(SpellBook.SpellLists[loadTarget])
-        SpellBook.CurrentList = SpellBook.SpellLists[loadTarget][1];
-        SpellBook.SpellPoints = SpellBook.SpellLists[loadTarget][0];
-        console.log(SpellBook.CurrentList);
-        console.log(SpellBook.SpellPoints);
+        
+        let list = localStorage.getItem(loadTarget)
+        list = JSON.parse(list);
+        
+        SpellBook.CurrentList = list;
+        
+        SpellBook.SpellPoints = list[0];
     },
     ///////////////////////// List Buttons
     Confirm: function(){

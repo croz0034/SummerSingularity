@@ -111,21 +111,25 @@ ${Tryeltech.magicClasses(TargetAbilities.LV6, 6)}</p>`;
             })
             
 SpellBook.SpellLists = localStorage.getItem(Tryeltech.ChosenClass.Name);
-let listkeys = localStorage.getItem(Tryeltech.ChosenClass.Name+"Key");
-            SpellBook.SpellLists = JSON.parse(SpellBook.SpellLists);
-            listkeys = JSON.parse(listkeys);
+SpellBook.ListKey = localStorage.getItem(Tryeltech.ChosenClass.Name+"Key");
             
-            if(listkeys){
-                console.log(listkeys);
+            SpellBook.SpellLists = JSON.parse(SpellBook.SpellLists);
+            
+            if(SpellBook.ListKey){
+            SpellBook.ListKey = SpellBook.ListKey.split(',');}
+            let x = 0;
+            if(SpellBook.ListKey){
+                console.log(SpellBook.ListKey);
                 try{
-                listkeys.forEach((lists)=>{ 
+                SpellBook.ListKey.forEach((lists)=>{ 
                     page1.innerHTML += `<li id="${lists}" class="ListType"> ${lists}</li>`;
+                    x ++;
                 })}
                 catch(err){
-                    page1.innerHTML += `<li id="${listkeys}" class="ListType"> ${listkeys}</li>`;
+                    page1.innerHTML += `<li id="${SpellBook.ListKey}" class="ListType"> ${SpellBook.ListKey}</li>`;
                 }
                 
-                document.querySelectorAll('.ListType').forEach((listButton)=>{
+               page1.innerHTML += `</ul>`; document.querySelectorAll('.ListType').forEach((listButton)=>{
                     listButton.addEventListener('click', SpellBook.Load);
                 })
             }
