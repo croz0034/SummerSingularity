@@ -128,3 +128,15 @@ object{
     display: block;
     font-size: 4rem
 }
+
+li.ListType{
+    min-width: 100%;
+    line-height: 2;
+    min-height: 8rem;
+    background-color: white;
+    border: 1px solid black;
+    display: block;
+}
+.disabled{
+    background-color: gray!important;
+}
