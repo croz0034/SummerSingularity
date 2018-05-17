@@ -107,7 +107,10 @@ ${Tryeltech.magicClasses(TargetAbilities.LV6, 6)}</p>`;
 
 
             })
-            
+            SpellBook.Archetypes = '';
+            SpellBook.ArchetypeReset();
+            SpellBook.SpellPoints = [5,5,5,5,5,6];
+            SpellBook.CurrentList = ['Spellpoints'];
 SpellBook.ListKey = localStorage.getItem(Tryeltech.ChosenClass.Name+"Key");
             
             if(SpellBook.ListKey){
