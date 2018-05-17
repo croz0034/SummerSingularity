@@ -3,9 +3,6 @@ let Tryeltech = {
     PageNumber: 0,
     Experience: [],
     Pages: [['.Login', "", "Classes" ],['.ClassSelect', 'Log in', 'Equip'],['.Page0', "Classes", "abilities"], ['.Page1', "equip", "Spell"], ['.Page2', "abilities", ""]],
-    SpellPoints: [5,5,5,5,5,6],
-    
-    SpellLists: [],
 
     Next: function () {
         if (Tryeltech.PageNumber < (Tryeltech.Pages.length - 1)) {
@@ -50,6 +47,7 @@ let Tryeltech = {
         let stage = document.getElementById("AbilitySelect");
         let ClassVal = ev.target.value;
         Tryeltech.ChosenClass = Classes[ClassVal];
+        Tryeltech.ChosenClass.value = ClassVal;
         let TargetAbilities = ClassAbilities[ClassVal];
         if (ClassVal < 6 || ClassVal > 9) {
             page1.innerHTML =
@@ -87,7 +85,7 @@ ${Tryeltech.magicClasses(TargetAbilities.LV6)}</p>`;
 <p> <strong> Weapons: </strong> ${Tryeltech.ChosenClass.Weapons}</p>
 <p> <strong> Note: </strong> </p>
 <p> Casters DO NOT start with armour, or shield profficiencies, and may only use daggers. Additional equipment may be purchased with spell points. </p>
-<object data="img/XPBar.svg" type="image/svg+xml" id="XP"></object><ul>`;
+<object data="img/XPBar.svg" type="image/svg+xml" id="XP"></object><ul id="ListsBed">`;
             stage.innerHTML = `<p class="lv0"> Look The Part: 
 ${Tryeltech.magicClasses(TargetAbilities.LTP, 0)}</p>
 <p class="lv1">Level 1
@@ -110,14 +108,12 @@ ${Tryeltech.magicClasses(TargetAbilities.LV6, 6)}</p>`;
 
             })
             
-SpellBook.SpellLists = localStorage.getItem(Tryeltech.ChosenClass.Name);
 SpellBook.ListKey = localStorage.getItem(Tryeltech.ChosenClass.Name+"Key");
-            
-            SpellBook.SpellLists = JSON.parse(SpellBook.SpellLists);
             
             if(SpellBook.ListKey){
             SpellBook.ListKey = SpellBook.ListKey.split(',');}
             let x = 0;
+            page1 = document.getElementById('ListsBed');
             if(SpellBook.ListKey){
                 console.log(SpellBook.ListKey);
                 try{

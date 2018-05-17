@@ -137,4 +137,6 @@ li.ListType{
     border: 1px solid black;
     display: block;
 }
-li.ListType:
+.disabled{
+    background-color: gray!important;
+}

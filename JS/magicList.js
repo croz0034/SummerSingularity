@@ -1,11 +1,11 @@
 let SpellBook = {
-        SpellLists: [],
         ListKey: ['end'],
         CurrentList: ['Spellpoints'],
         CurrentSpell: [''],
         CurrentTotal: 0,
         CurrentLevel: 0,
         CurrentClass: "",
+        Archetypes: [],
     TargetList: '',
         SpellPoints: [5, 5, 5, 5, 5, 6],
 
@@ -20,6 +20,7 @@ let SpellBook = {
         },
     
         Save: function(){
+            
             let listname = prompt('list name:');
             SpellBook.ListKey += "," +listname;
             
@@ -29,11 +30,26 @@ let SpellBook = {
             
             localStorage.setItem(listname, JSON.stringify(SpellBook.CurrentList));
             
-            
+            Tryeltech.Prev();
+            SpellBook.Clear();
+            let page1 = document.getElementById('ListsBed');
+             try{
+                 page1.innerHTML = '';
+                let additions = SpellBook.ListKey.split([","]);
+            console.log(additions);
+                 additions.forEach((list)=>{ 
+                    page1.innerHTML += `<li id="${list}" class="ListType"> ${list}</li>`;
+                })}
+                catch(err){
+                }document.querySelectorAll('.ListType').forEach((listButton)=>{
+                    listButton.addEventListener('click', SpellBook.Load);
+                })
             
         },
     /////////////////////////// List Populate
         Activate: function (ev) {
+            
+            if(!ev.target.parentElement.classList.contains('disabled')){
             
         try{
             document.querySelector('.active').classList.remove('active')
@@ -58,7 +74,7 @@ let SpellBook = {
         
         additions.innerHTML = `<tr><th>Purchased</th><th>Name</th><th>Cost</th></tr>`;
             for (i=1; i< SpellBook.CurrentList.length; i++){
-        additions.innerHTML += `<tr info="${SpellBook.CurrentList[i].Spell}" id="SelectedSpells"><td>${SpellBook.CurrentList[i].Purchased}</td><td>${abilities[SpellBook.CurrentList[i].Spell[0]].name}</td><td>${SpellBook.CurrentList[i].cost}</td></tr>` ;
+        additions.innerHTML += `<tr info="${SpellBook.CurrentList[i].Spell}" level="${SpellBook.CurrentList[i].level}" id="SelectedSpells"><td>${SpellBook.CurrentList[i].Purchased}</td><td>${abilities[SpellBook.CurrentList[i].Spell[0]].name}</td><td>${SpellBook.CurrentList[i].cost}</td></tr>` ;
     }
             
             
@@ -76,9 +92,11 @@ let SpellBook = {
         document.getElementById('Amount').textContent = `${SpellBook.CurrentTotal} / ${SpellBook.CurrentSpell[3]}`;
             
             
+        }
             
 },
     Load: function(ev){
+        Tryeltech.Next();
         
         let loadTarget = ev.target.id;
         console.log(loadTarget);
@@ -101,6 +119,12 @@ let SpellBook = {
                 
                 if(SpellBook.CurrentTotal < 1){
                     SpellBook.CurrentList.splice(exists,1)
+                    
+                    if(SpellBook.CurrentSpell[0] == 145){
+                        SpellBook.RemoveSummoner();
+                    }if(SpellBook.CurrentSpell[0] == 113){
+                        SpellBook.RemoveRanger();
+                    }
                 }
             
             
@@ -111,6 +135,8 @@ let SpellBook = {
         SpellBook.CurrentList.push({"Spell": SpellBook.CurrentSpell, "Purchased": SpellBook.CurrentTotal, "cost": (SpellBook.CurrentTotal * SpellBook.CurrentSpell[4]), "level": SpellBook.CurrentLevel});}
         }
         SpellBook.Clear();
+        
+        SpellBook.CheckForArchetypes();
         
         console.log("Confirm: " + SpellBook.SpellPoints);
     },
@@ -177,14 +203,16 @@ let SpellBook = {
             document.querySelector('.active').classList.remove('active')
         } catch(err){};
         SpellBook.CurrentSpell = ev.target.parentElement.getAttribute('info').split([","]);
+        SpellBook.CurrentLevel = ev.target.parentElement.getAttribute('Level');
+        ev.target.parentElement.classList.add('active');
         
-        ev.target.classList.add('active');
-        
+        x = 0;
         SpellBook.CurrentList.forEach((spell)=>{
+            if(x>0){
             if(spell.Spell[0] == SpellBook.CurrentSpell[0]){
                 SpellBook.CurrentTotal = spell.Purchased;
                 return;
-            }
+            }} x++
         })
     
     
@@ -195,7 +223,184 @@ let SpellBook = {
         
         document.getElementById('Amount').textContent = `${SpellBook.CurrentTotal} / ${SpellBook.CurrentSpell[3]}`;
     
-    }
+    },
+    
+    CheckForArchetypes: function(){
+        for(x=1; x<SpellBook.CurrentList.length; x++){
+            if(abilities[SpellBook.CurrentList[x].Spell[0]].name.includes('Summoner') && !SpellBook.Archetypes.includes('Summoner')){
+                SpellBook.AddSummoner();
+            }
+            if(abilities[SpellBook.CurrentList[x].Spell[0]].name.includes('Ranger') && !SpellBook.Archetypes.includes('Ranger')){
+                SpellBook.AddRanger()
+        }
+        
+        
+        
+        }
+        
+        
+    },
+    
+    
+    /////////////////////////////// Summoner
+    AddSummoner: function(ev){
+        let CanSummon = true;
+        for(x=1; x<SpellBook.CurrentList.length; x++){
+            let inquestion = abilities[SpellBook.CurrentList[x].Spell[0]]
+            if(inquestion.type == 2 && inquestion.range > 2 ){
+                CanSummon = false;
+            }
+            if(inquestion.name.includes('Equipment') && SpellBook.CurrentList[x].level > 2){
+                CanSummon = false;
+            }
+        }
+        
+        if(CanSummon){
+        for(x=1; x<SpellBook.CurrentList.length; x++){
+            if(abilities[SpellBook.CurrentList[x].Spell[0]].type == 1){
+                SpellBook.CurrentList[x].Spell[1] = (SpellBook.CurrentList[x].Spell[1])*2;
+            }
+        }
+        document.querySelectorAll('#AbilityItem').forEach((Spell)=>{
+            let AbilityLevel = Spell.getAttribute('level');
+            let SpellInQuestion = Spell.getAttribute('info').split(',');
+            let SpellName = abilities[SpellInQuestion[0]].name;
+            let SpellType = abilities[SpellInQuestion[0]].type;
+            if(SpellType == 1){
+                SpellInQuestion[1] = (SpellInQuestion[1] * 2);
+                Spell.setAttribute('info', SpellInQuestion);
+            }else if((SpellName.includes('Equipment') && AbilityLevel > 2 )){
+                Spell.classList.add('disabled');
+            }else if((SpellType == 2 && abilities[SpellInQuestion[0]].range > 2)){
+                Spell.classList.add('disabled');
+            }
+            
+            Spell.innerHTML = `<tr><td>${abilities[SpellInQuestion[0]].name}</td><td>${SpellInQuestion[4]}</td><td>${SpellInQuestion[3]}</td><td>${SpellInQuestion[1]}${SpellInQuestion[2]}</td></tr>`;
+        })
+        SpellBook.Archetypes.push('Summoner');
+        }
+        else{ alert('No can do buckaroo');}
+        
+    },
+    
+    RemoveSummoner: function(ev){
+        for(x=1; x<SpellBook.CurrentList.length; x++){
+            if(abilities[SpellBook.CurrentList[x].Spell[0]].type == 1){
+                SpellBook.CurrentList[x].Spell[1] = (SpellBook.CurrentList[x].Spell[1])/2;
+            }
+        }
+        document.querySelectorAll('#AbilityItem').forEach((Spell)=>{
+            let AbilityLevel = Spell.getAttribute('level');
+            let SpellInQuestion = Spell.getAttribute('info').split(',');
+            let SpellName = abilities[SpellInQuestion[0]].name;
+            let SpellType = abilities[SpellInQuestion[0]].type;
+            if(SpellType == 1){
+                SpellInQuestion[1] = (SpellInQuestion[1] / 2);
+                Spell.setAttribute('info', SpellInQuestion);
+            }else if((SpellName.includes('Equipment') && AbilityLevel > 2 )){
+                Spell.classList.remove('disabled');
+            }else if((SpellType == 2 && abilities[SpellInQuestion[0]].range > 2)){
+                Spell.classList.remove('disabled');
+            }
+            
+            Spell.innerHTML = `<tr><td>${abilities[SpellInQuestion[0]].name}</td><td>${SpellInQuestion[4]}</td><td>${SpellInQuestion[3]}</td><td>${SpellInQuestion[1]}${SpellInQuestion[2]}</td></tr>`;
+        })
+        for(i = SpellBook.Archetypes.length; i >= 0; i--){
+            if(SpellBook.Archetypes[i] == 'Summoner'){
+                SpellBook.Archetypes.splice(i, 1);
+            }
+        }
+        
+        
+    },
+    
+    
+    
+    //////////////////////////Ranger
+    AddRanger: function(ev){
+        for(x=1; x<SpellBook.CurrentList.length; x++){
+            if(abilities[SpellBook.CurrentList[x].Spell[0]].type == 1){
+                
+                SpellBook.SpellPoints[SpellBook.CurrentList[x].level] += SpellBook.CurrentList[x].cost;
+                
+                SpellBook.CurrentList[x].Spell[4] = (SpellBook.CurrentList[x].Spell[4])*2;
+                SpellBook.CurrentList[x].cost = (SpellBook.CurrentList[x].cost)*2;
+            }
+            if(abilities[SpellBook.CurrentList[x].Spell[0]].name.includes('Equipment')){
+                SpellBook.SpellPoints[SpellBook.CurrentList[x].level] -= SpellBook.CurrentList[x].cost;
+                SpellBook.CurrentList[x].Spell[4] = 0;
+                SpellBook.CurrentList[x].cost = 0;
+                
+            }
+        }
+        document.querySelectorAll('#AbilityItem').forEach((Spell)=>{
+            let AbilityLevel = Spell.getAttribute('level');
+            let SpellInQuestion = Spell.getAttribute('info').split(',');
+            let SpellName = abilities[SpellInQuestion[0]].name;
+            let SpellType = abilities[SpellInQuestion[0]].type;
+            if(SpellType == 1){
+                SpellInQuestion[4] = (SpellInQuestion[4] * 2);
+                Spell.setAttribute('info', SpellInQuestion);
+            }else if((SpellName.includes('Equipment'))){
+                SpellInQuestion[4] = 0;
+            }
+            Spell.setAttribute('info', SpellInQuestion);
+            Spell.innerHTML = `<tr><td>${abilities[SpellInQuestion[0]].name}</td><td>${SpellInQuestion[4]}</td><td>${SpellInQuestion[3]}</td><td>${SpellInQuestion[1]}${SpellInQuestion[2]}</td></tr>`;
+        })
+                SpellBook.Archetypes.push('Ranger');},
+    
+    RemoveRanger: function(ev){
+        for(x=1; x<SpellBook.CurrentList.length; x++){
+            if(abilities[SpellBook.CurrentList[x].Spell[0]].type == 1){
+                
+                SpellBook.SpellPoints[SpellBook.CurrentList[x].level] -= SpellBook.CurrentList[x].cost;
+                
+                SpellBook.CurrentList[x].Spell[4] = (SpellBook.CurrentList[x].Spell[4])/2;
+                SpellBook.CurrentList[x].cost = (SpellBook.CurrentList[x].cost)/2;
+            }
+            if(abilities[SpellBook.CurrentList[x].Spell[0]].name.includes('Short')){
+                SpellBook.SpellPoints[0] -= (SpellBook.CurrentList[x].Purchased)*2;
+                SpellBook.CurrentList[x].Spell[4] = 2;
+                SpellBook.CurrentList[x].cost =(SpellBook.CurrentList[x].Purchased)*2;
+             } else if(abilities[SpellBook.CurrentList[x].Spell[0]].name.includes('Shield')){
+                SpellBook.SpellPoints[1] -= 4;
+                SpellBook.CurrentList[x].Spell[4] = 4;
+                SpellBook.CurrentList[x].cost = 4;
+             } else if(abilities[SpellBook.CurrentList[x].Spell[0]].name.includes('Long')){
+                SpellBook.SpellPoints[3] -= 4;
+                SpellBook.CurrentList[x].Spell[4] = 4;
+                SpellBook.CurrentList[x].cost = 4;
+             }else if(abilities[SpellBook.CurrentList[x].Spell[0]].name.includes('Great')){
+                SpellBook.SpellPoints[4] -= 5;
+                SpellBook.CurrentList[x].Spell[4] = 5;
+                SpellBook.CurrentList[x].cost = 5;
+             }
+            
+            
+            
+        }
+        document.querySelectorAll('#AbilityItem').forEach((Spell)=>{
+            let AbilityLevel = Spell.getAttribute('level');
+            let SpellInQuestion = Spell.getAttribute('info').split(',');
+            let SpellName = abilities[SpellInQuestion[0]].name;
+            let SpellType = abilities[SpellInQuestion[0]].type;
+            if(SpellType == 1){
+                SpellInQuestion[4] = (SpellInQuestion[4] / 2);
+                Spell.setAttribute('info', SpellInQuestion);
+            }else if(SpellName.includes('Weapon, Short')){
+                SpellInQuestion[4] = 2;
+            }else if(SpellName.includes('Shield')){
+                SpellInQuestion[4] = 4;
+            }else if(SpellName.includes('Weapon, Long')){
+                SpellInQuestion[4] = 4;
+            }else if(SpellName.includes('Weapon, Great')){
+                SpellInQuestion[4] = 5;
+            }
+            
+            Spell.setAttribute('info', SpellInQuestion);
+            Spell.innerHTML = `<tr><td>${abilities[SpellInQuestion[0]].name}</td><td>${SpellInQuestion[4]}</td><td>${SpellInQuestion[3]}</td><td>${SpellInQuestion[1]}${SpellInQuestion[2]}</td></tr>`;
+        })
+                SpellBook.Archetypes.push('Ranger');},
     
     
     
