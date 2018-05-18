@@ -50,6 +50,7 @@ let LevelRig ={
         jsork.player.getClasses(Player, function(data){
             data.forEach((clas)=>{
                 LevelRig.XP.push(clas);
+                console.log(clas);
             })
             let playerData = JSON.stringify({"PlayerName": Yolo, "Park": LevelRig.Park, "ClassCredits": LevelRig.XP});
         localStorage.setItem("Player", playerData);

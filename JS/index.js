@@ -1,5 +1,6 @@
 let Tryeltech = {
     ChosenClass: 'd',
+    ChosenClassLevel: '',
     PageNumber: 0,
     Experience: [],
     Pages: [['.Login', "", "Classes" ],['.ClassSelect', 'Log in', 'Equip'],['.Page0', "Classes", "abilities"], ['.Page1', "equip", "Spell"], ['.Page2', "abilities", ""]],
@@ -49,9 +50,17 @@ let Tryeltech = {
         Tryeltech.ChosenClass = Classes[ClassVal];
         Tryeltech.ChosenClass.value = ClassVal;
         let TargetAbilities = ClassAbilities[ClassVal];
+        
+        
+        LevelRig.XP.forEach((clas)=>{
+            if(clas.class == Tryeltech.ChosenClass.Name){
+                Tryeltech.ChosenClassLevel = clas.level;
+                console.log(clas.level);
+            }})
+        
         if (ClassVal < 6 || ClassVal > 9) {
             page1.innerHTML =
-                `<p> <strong> Class: </strong> ${Tryeltech.ChosenClass.Name} </p>
+                `<p> <strong> Class: </strong> ${Tryeltech.ChosenClass.Name} </p><p> <strong> Level: </strong> ${Tryeltech.ChosenClassLevel} </p>
 <p> <strong> Sash Colour: </strong> ${Tryeltech.ChosenClass.Sash} </p>
 <p> <strong> Armour: </strong> ${Tryeltech.ChosenClass.Armour}</p>
 <p> <strong> Shield: </strong> ${Shields[Tryeltech.ChosenClass.Shield]}</p>
@@ -78,7 +87,7 @@ ${Tryeltech.magicClasses(TargetAbilities.LV6)}</p>`;
         } else {
             SpellBook.CurrentClass = Tryeltech.ChosenClass.Name;
             page1.innerHTML =
-                `<p> <strong> Class: </strong> ${Tryeltech.ChosenClass.Name} </p>
+                `<p> <strong> Class: </strong> ${Tryeltech.ChosenClass.Name} </p><p> <strong> Level: </strong> ${Tryeltech.ChosenClassLevel} </p>
 <p> <strong> Sash Colour: </strong> ${Tryeltech.ChosenClass.Sash} </p>
 <p> <strong> Armour: </strong> ${Tryeltech.ChosenClass.Armour}</p>
 <p> <strong> Shield: </strong> ${Shields[Tryeltech.ChosenClass.Shield]}</p>
@@ -109,7 +118,7 @@ ${Tryeltech.magicClasses(TargetAbilities.LV6, 6)}</p>`;
             })
             SpellBook.Archetypes = '';
             SpellBook.ArchetypeReset();
-            SpellBook.SpellPoints = [5,5,5,5,5,6];
+            SpellBook.SpellPoints = SpellBook.SpellPointMax();
             SpellBook.CurrentList = ['Spellpoints'];
 SpellBook.ListKey = localStorage.getItem(Tryeltech.ChosenClass.Name+"Key");
             
