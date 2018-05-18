@@ -177,17 +177,7 @@ let SpellBook = {
     },
     Clear: function () {
         document.getElementById('SpellList').classList.add('hidden');
-      
-        
-          let MainLevel = parseInt(SpellBook.CurrentSpell[4]);
-                let PrevPoints = parseInt(SpellBook.SpellPoints[(SpellBook.CurrentLevel) - 1]);
-
-                console.log(MainLevel + PrevPoints);
-
-                SpellBook.SpellPoints[(SpellBook.CurrentLevel) - 1] = (MainLevel * SpellBook.CurrentTotal) + PrevPoints;
-
-        
-
+        SpellBook.ArchetypeReset();
         SpellBook.CurrentSpell = "";
         SpellBook.CurrentTotal = 0;
 
