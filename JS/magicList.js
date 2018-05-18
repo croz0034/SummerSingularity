@@ -7,7 +7,7 @@ let SpellBook = {
     CurrentClass: "",
     Archetypes: [],
     TargetList: '',
-    SpellPoints: [5, 5, 5, 5, 5, 6],
+    SpellPoints: [],
 
     init: function () {
 
@@ -16,7 +16,25 @@ let SpellBook = {
         document.getElementById("Ok").addEventListener('click', SpellBook.Confirm);
         document.getElementById('Save').addEventListener('click', SpellBook.Save);
         document.getElementById('Cancel').addEventListener('click', SpellBook.Clear);
+       SpellBook.SpellPoints = SpellBook.SpellPointMax();
 
+    },
+    
+    SpellPointMax: function(){
+        if(Tryeltech.ChosenClassLevel > 0 && Tryeltech.ChosenClassLevel < 7){
+        SpellBook.SpellPoints = [];
+        for(x=1; x < 7; x++){
+            if ( x < Tryeltech.ChosenClassLevel){
+            SpellBook.SpellPoints.push(5);}
+            else if(x == Tryeltech.ChosenClassLevel){
+                SpellBook.SpellPoints[x-1] = 6;
+                console.log(SpellBook.SpellPoints)
+            } else if (Tryeltech.ChosenClassLevel < x){
+                SpellBook.SpellPoints.push(0);
+            }
+        }}else{SpellBook.SpellPoints = [5, 5, 5, 5, 5, 6]}
+        console.log(SpellBook.SpellPoints);
+        return SpellBook.SpellPoints;
     },
 
     Save: function () {
@@ -159,6 +177,16 @@ let SpellBook = {
     },
     Clear: function () {
         document.getElementById('SpellList').classList.add('hidden');
+      
+        
+          let MainLevel = parseInt(SpellBook.CurrentSpell[4]);
+                let PrevPoints = parseInt(SpellBook.SpellPoints[(SpellBook.CurrentLevel) - 1]);
+
+                console.log(MainLevel + PrevPoints);
+
+                SpellBook.SpellPoints[(SpellBook.CurrentLevel) - 1] = (MainLevel * SpellBook.CurrentTotal) + PrevPoints;
+
+        
 
         SpellBook.CurrentSpell = "";
         SpellBook.CurrentTotal = 0;
@@ -172,13 +200,16 @@ let SpellBook = {
 
         let AvailablePoints = 0;
 
+        console.log(parseInt(SpellBook.SpellPoints));
         for (i = 0; i < 6; i++) {
             if (Math.sign(SpellBook.SpellPoints[i]) == "-1") {
                 AvailablePoints += SpellBook.SpellPoints[i];
             } else if (i >= (SpellBook.CurrentLevel - 1)) {
                 AvailablePoints += SpellBook.SpellPoints[i];
-            }
+            } 
         }
+        
+        console.log("AvailablePoints: " + AvailablePoints);
         let max = SpellBook.CurrentSpell[3];
 
         if (max == "" || max == '-' || max == " ") {
@@ -186,7 +217,7 @@ let SpellBook = {
         }
 
         if (MoreOrLess == "More") {
-            if (AvailablePoints > SpellBook.CurrentSpell[4] && SpellBook.CurrentTotal < max) {
+            if (AvailablePoints >= SpellBook.CurrentSpell[4] && SpellBook.CurrentTotal < max) {
                 SpellBook.CurrentTotal++;
                 SpellBook.SpellPoints[(SpellBook.CurrentLevel) - 1] -= SpellBook.CurrentSpell[4];
 
@@ -333,7 +364,7 @@ let SpellBook = {
     ArchetypeReset: function(ev){
         let classes = {'Archer': 0,'Assassin': 1,'Barbarian': 2,'Monk': 3,'Scout': 4,'Warrior': 5,'Bard': 6,'Druid': 7,'Healer': 8,'Wizard': 9,'AntiPaladin': 10, 'Paladin': 11}
         let PaintedTarget = classes[SpellBook.CurrentClass];
-        SpellBook.SpellPoints = [5, 5, 5, 5, 5, 6];
+       SpellBook.SpellPoints = SpellBook.SpellPointMax();
         Tryeltech.ChosenClass = Classes
         
         console.log(SpellBook.CurrentClass);
